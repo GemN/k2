@@ -16,9 +16,17 @@ const ArticleContainer = styled.div`
 `;
 
 class MainCourse extends PureComponent {
+  static header = {
+    colorTitle: '#4462C5',
+    colorNavbar: '#F6BF00',
+    colorNavbarActive: '#F5A3C7',
+  };
+
   render() {
     return (
-      <BasePage {...this.props}>
+      <BasePage {...this.props}
+        header={MainCourse.header}
+      >
         <Container>
           <ArticleContainer>
             <Article
@@ -26,10 +34,11 @@ class MainCourse extends PureComponent {
               data={{
                 title: 'Le JahJah',
                 subtitle: 'jamaïcain vegan',
+                description: '“ pour une explosion de saveurs et un voyage à la Jamaique, le tout à petit prix et dans Paris! ”',
                 address: '11 rue des petites écuries',
                 city: '75010 Paris',
               }}
-              backgroundColor="#5071C4"
+              backgroundColor="#4C6DCA"
             />
           </ArticleContainer>
         </Container>

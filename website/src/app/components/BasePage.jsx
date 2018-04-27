@@ -7,19 +7,21 @@ const Container = styled.div`
 `;
 
 const Body = styled.div`
-  height: calc(100% - 96px);
+  height: calc(100% - 112px);
 `;
 
 const Header = styled.div`
-  height: 96px;
+  height: 112px;
 `;
 
 const Title = styled.div`
   width: 100%;
   padding: 16px;
   font-weight: bold;
-  font-size: 15px;
+  font-size: 30px;
+  letter-spacing: 1.5px;
   text-align: center;
+  color: ${p => p.color ? p.color : 'black'};
 `;
 
 const NavBar = styled.div`
@@ -30,18 +32,30 @@ const NavBar = styled.div`
 const NarBarLink = styled.div`
   display: inline-block;
   margin: 0 16px;
-  font-size: 12px;
-  letter-spacing: 0.5px;
+  font-size: 15px;
+  letter-spacing: 1.5px;
   cursor: pointer;
   translation: all 0.15s ease-in-out;
   border-bottom: 2px solid transparent;
   padding-bottom: 2px;
+  color: ${p => p.color ? p.color : 'black'};
   &:hover {
-    border-bottom: 2px solid black;
+    border-bottom: 2px solid ${p => p.color ? p.color : 'black'};
   }
 `;
 
 class BasePage extends Component {
+  static defaultProps = {
+    header: {},
+  };
+
+  static links = [
+    { value: 'home', url: '/' },
+    { value: 'entrée', url: '/entree' },
+    { value: 'plat', url: '/plat' },
+    { value: 'dessert', url: '/dessert' },
+  ];
+
   props: {
     children: any,
     history: {
@@ -51,16 +65,22 @@ class BasePage extends Component {
 
   goToLink = link => this.props.history.push(link);
 
+  isActive = link => this.props.history.location.pathname === link.url
+
   render() {
+    const { header } = this.props;
     return (
       <Container>
         <Header>
-          <Title>K 2 Food</Title>
-          <NavBar>
-            <NarBarLink>home</NarBarLink>
-            <NarBarLink>entrée</NarBarLink>
-            <NarBarLink onClick={() => this.goToLink('/plat')}>plat</NarBarLink>
-            <NarBarLink>dessert</NarBarLink>
+          <Title color={header.colorTitle}>sunny food</Title>
+          <NavBar color={header.colorNavbar}>
+            {BasePage.links.map(l => (
+              <NarBarLink
+                key={l.value} color={this.isActive(l) ? header.colorNavbarActive : header.colorNavbar}
+                onClick={() => this.goToLink(l.url)}>
+                {l.value}
+              </NarBarLink>
+            ))}
           </NavBar>
         </Header>
         <Body>
